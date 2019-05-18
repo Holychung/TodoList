@@ -3,6 +3,9 @@ import axios from 'axios'
 
 // import Input from '@material-ui/core/Input';
 import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 import './App.css'
 
@@ -16,11 +19,13 @@ class App extends React.Component {
       due: "",
       createdAt: "2019-05-15 18:36:41",
       updatedAt: "2019-05-15 18:36:41",
+      color: ""
     }
     this.createTodo = this.createTodo.bind(this)
     this.getTodo = this.fetchTodo.bind(this)
     this.deleteTodo = this.deleteTodo.bind(this)
     this.handleChangeName = this.handleChangeName.bind(this)
+    this.handleChangeColor = this.handleChangeColor.bind(this)
   }
 
   componentDidMount(){
@@ -39,13 +44,14 @@ class App extends React.Component {
     new_todo['due'] = state.due
     new_todo['createdAt'] = state.createdAt
     new_todo['updatedAt'] = state.updatedAt
+    new_todo['color'] = state.color
     
     axios.post('http://localhost/api/Todo/create.php', new_todo)
     .then(response=>console.log(response))
     .catch(error => console.log(error))
     
     // update state to force re-render
-    new_todo['id'] = this.state.todo_list.length + 1
+    new_todo['id'] = state.todo_list.length + 1
     // for deep copy new_todo
     let obj = JSON.parse(JSON.stringify(new_todo))
     this.setState({
@@ -71,6 +77,11 @@ class App extends React.Component {
       due: new_due
     })
   }
+  handleChangeColor(new_color){
+    this.setState({
+      color: new_color
+    })
+  }
 
   render() {
     let todo_list = this.state.todo_list
@@ -78,7 +89,7 @@ class App extends React.Component {
 
     return (
       <div>
-        PHP hello
+        <h1>PHP TodoList</h1>
         <form className="container" noValidate autoComplete="off">  
           <TextField
             id="standard-name"
@@ -102,15 +113,27 @@ class App extends React.Component {
             onChange={(e) => this.handleChangeDue(e.target.value)}
           />
 
-          <TextField
-            id="standard-password-input"
-            label="Password"
-            className="aa"
-            type="password"
-            autoComplete="current-password"
-            margin="normal"
-          />
         </form>
+
+        <FormControl className="formcontrol">
+          <InputLabel htmlFor="age-native-simple">Color</InputLabel>
+          <Select
+            native
+            value={this.state.color}
+            onChange={(e) => this.handleChangeColor(e.target.value)}
+            inputProps={{
+              name: 'age',
+              id: 'age-native-simple',
+            }}
+          >
+            <option value="EDEDED" />
+            <option value="EDEDED">Grey</option>
+            <option value="D4DDEE">Blue</option>
+            <option value="FFE5D4">Red</option>
+            <option value="DDF3D9">Green</option>
+            <option value="FFF4CA">Yellow</option>
+          </Select>
+        </FormControl>
 
         <br/>
 
@@ -119,8 +142,8 @@ class App extends React.Component {
           todo_list.map(
             (todo) => 
               <div key={todo.id}>
+                <div className={todo.color}>color</div>
                 <div> {todo.id}: {todo.name} </div>
-                <button onClick={ () => this.handleAddTodo(tmp_data) }>update one</button>
                 <button onClick={ () => this.deleteTodo(todo.id) }>delete one</button>
               </div>
           )
@@ -131,12 +154,13 @@ class App extends React.Component {
   }
 }
 
-const tmp_data = {
-  "name": "Yee",
-  "description" : "Yee",
-  "due": "2019-05-15 18:36:41",
-  "createdAt": "2019-05-15 18:36:41",
-  "updatedAt": "2019-05-15 18:36:41"
-}
+// const tmp_data = {
+//   "name": "Yee",
+//   "description" : "Yee",
+//   "due": "2019-05-15 18:36:41",
+//   "createdAt": "2019-05-15 18:36:41",
+//   "updatedAt": "2019-05-15 18:36:41",
+//   "color": "EDEDED"
+// }
 
 export default App
