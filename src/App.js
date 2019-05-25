@@ -163,7 +163,6 @@ class App extends React.Component {
 
     return (
       <div>
-        <h1>PHP TodoList</h1>
         <div className="tag"> An easy way to manage your work. 
           <span className="caret">|</span>
         </div>
@@ -245,14 +244,10 @@ class App extends React.Component {
                       <Checkbox
                         checked={todo.isDone}
                         onChange={() => this.updateTodo(todo)}
-                        className="m-0 col-3"
                         classes={{
                           root: classes.root,
                           checked: classes.checked,
                         }}
-                        // style={{ width: 36, height: 36 }}
-                        // icon={<CheckBoxOutlineBlankIcon style={{ fontSize: 20 }} />}
-                        // checkedIcon={<CheckBoxIcon style={{ fontSize: 20 }} />}
                       />
                     }
                     label=""
@@ -263,16 +258,6 @@ class App extends React.Component {
                   </div>
 
                   <div className="row ml-5">
-                    <Fab 
-                        color="secondary"
-                        size="small"
-                        aria-label="Edit" 
-                        className="align-self-end mb-2 mx-2"
-                        onClick={ () => this.updateTodo(todo) }
-                    >
-                      <Icon>edit_icon</Icon>
-                    </Fab>
-                    
                     <Fab 
                         aria-label="Delete" 
                         size="small" 
@@ -303,16 +288,5 @@ const styles = {
   },
   checked: {},
 };
-
-
-
-// const tmp_data = {
-//   "name": "Yee",
-//   "description" : "Yee",
-//   "due": "2019-05-15 18:36:41",
-//   "createdAt": "2019-05-15 18:36:41",
-//   "updatedAt": "2019-05-15 18:36:41",
-//   "color": "EDEDED"
-// }
 
 export default withStyles(styles)(App);

@@ -60,7 +60,7 @@
 	height: 32px !important;
 }
 .MuiFormControlLabel-root{
-	margin-right: 0px !important;
+	/*margin-right: 0px !important;*/
 	margin-bottom: 0px !important;
 }
 
